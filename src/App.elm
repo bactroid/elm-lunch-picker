@@ -75,7 +75,7 @@ view : Model -> Html Msg
 view model =
     div
         [ classList
-            [ ( "mdl-card-wide", True )
+            [ ( "mdl-card", True )
             , ( "mdl-shadow--4dp", True )
             ]
         ]

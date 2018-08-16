@@ -9085,7 +9085,7 @@ var _user$project$Main$view = function (model) {
 			_0: _elm_lang$html$Html_Attributes$classList(
 				{
 					ctor: '::',
-					_0: {ctor: '_Tuple2', _0: 'mdl-card-wide', _1: true},
+					_0: {ctor: '_Tuple2', _0: 'mdl-card', _1: true},
 					_1: {
 						ctor: '::',
 						_0: {ctor: '_Tuple2', _0: 'mdl-shadow--4dp', _1: true},
