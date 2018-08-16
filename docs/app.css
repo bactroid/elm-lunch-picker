@@ -1,0 +1,9 @@
+body {
+  padding: 20px;
+  background: #fafafa;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
