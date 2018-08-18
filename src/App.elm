@@ -98,7 +98,7 @@ view model =
         , Elevation.e4
         ]
         [ Card.title
-            [ Color.background (Color.color Color.Red Color.S800)
+            [ Color.background (Color.color Color.Blue Color.S400)
             , css "height" "100px"
             , css "padding" "0"
             ]
@@ -117,13 +117,13 @@ view model =
                 [ 0 ]
                 model.mdl
                 [ Button.raised
+                , Button.colored
                 , Button.ripple
                 , Options.onClick GetRandomRestaurant
                 ]
                 [ text "Nah. Pick something else." ]
             ]
         ]
-        |> Material.Scheme.topWithScheme Color.Red Color.Amber
 
 
 
