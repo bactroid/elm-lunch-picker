@@ -11,6 +11,7 @@ import Material.Elevation as Elevation
 import Material.Button as Button
 import Material.Card as Card
 import Material.Color as Color
+import Material.Typography as Typography
 import Material.Options as Options exposing (css)
 
 
@@ -110,7 +111,7 @@ view model =
                 ]
                 [ text "Today, for lunch, I recommend…" ]
             ]
-        , Card.text [] [ text model.restaurant ]
+        , Card.text [] [ Options.div [ Typography.headline ] [ text model.restaurant ] ]
         , Card.actions
             [ Card.border ]
             [ Button.render Mdl
