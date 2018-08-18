@@ -5,6 +5,10 @@ import Html.Events exposing (onClick)
 import Html.Attributes exposing (classList, class)
 import Http
 import Json.Decode as Decode
+import Material
+import Material.Scheme
+import Material.Button as Button
+import Material.Options exposing (css)
 
 
 main : Program Never Model Msg
@@ -22,12 +26,15 @@ main =
 
 
 type alias Model =
-    String
+    -- String
+    { restaurant : String
+    , mdl : Material.Model
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( "", getRandomRestaurant apiUrl )
+    ( { restaurant = "", mdl = Material.model }, getRandomRestaurant apiUrl )
 
 
 
@@ -37,19 +44,29 @@ init =
 type Msg
     = GetRandomRestaurant
     | NewRestaurant (Result Http.Error String)
+    | Mdl (Material.Msg Msg)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetRandomRestaurant ->
-            ( model, getRandomRestaurant apiUrl )
+            ( model
+            , getRandomRestaurant apiUrl
+            )
 
         NewRestaurant (Ok newRestaurant) ->
-            ( newRestaurant, Cmd.none )
+            ( { model | restaurant = newRestaurant }
+            , Cmd.none
+            )
 
         NewRestaurant (Err _) ->
-            ( model, Cmd.none )
+            ( model
+            , Cmd.none
+            )
+
+        Mdl msg_ ->
+            Material.update Mdl msg_ model
 
 
 apiUrl : String
@@ -80,7 +97,7 @@ view model =
             ]
         ]
         [ div [ class "mdl-card__title" ] [ h2 [ class "mdl-card__title-text" ] [ text "Today, for lunch, I recommend…" ] ]
-        , div [ class "mdl-card__supporting-text" ] [ text model ]
+        , div [ class "mdl-card__supporting-text" ] [ text model.restaurant ]
         , div [ class "mdl-card__actions" ]
             [ a
                 [ onClick GetRandomRestaurant
@@ -95,6 +112,7 @@ view model =
                 [ text "Nah. Pick something else." ]
             ]
         ]
+        |> Material.Scheme.top
 
 
 
