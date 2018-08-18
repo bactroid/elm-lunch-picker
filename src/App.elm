@@ -102,6 +102,7 @@ view model =
             [ 0 ]
             model.mdl
             [ Button.raised
+            , Button.colored
             , Button.ripple
             , Options.onClick GetRandomRestaurant
             ]
