@@ -8,7 +8,7 @@ import Json.Decode as Decode
 import Material
 import Material.Scheme
 import Material.Button as Button
-import Material.Options exposing (css)
+import Material.Options as Options
 
 
 main : Program Never Model Msg
@@ -98,19 +98,14 @@ view model =
         ]
         [ div [ class "mdl-card__title" ] [ h2 [ class "mdl-card__title-text" ] [ text "Today, for lunch, I recommend…" ] ]
         , div [ class "mdl-card__supporting-text" ] [ text model.restaurant ]
-        , div [ class "mdl-card__actions" ]
-            [ a
-                [ onClick GetRandomRestaurant
-                , classList
-                    [ ( "mdl-button", True )
-                    , ( "mdl-js-button", True )
-                    , ( "mdl-button--raised", True )
-                    , ( "mdl-js-ripple-effect", True )
-                    , ( "mdl-button--accent", True )
-                    ]
-                ]
-                [ text "Nah. Pick something else." ]
+        , Button.render Mdl
+            [ 0 ]
+            model.mdl
+            [ Button.raised
+            , Button.ripple
+            , Options.onClick GetRandomRestaurant
             ]
+            [ text "Nah. Pick something else." ]
         ]
         |> Material.Scheme.top
 
