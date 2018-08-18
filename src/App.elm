@@ -94,7 +94,9 @@ decodeResp =
 view : Model -> Html Msg
 view model =
     Card.view
-        [ css "width" "400px" ]
+        [ css "width" "400px"
+        , Elevation.e4
+        ]
         [ Card.title
             [ css "background" "red"
             , css "height" "100px"
