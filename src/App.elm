@@ -7,8 +7,11 @@ import Http
 import Json.Decode as Decode
 import Material
 import Material.Scheme
+import Material.Elevation as Elevation
 import Material.Button as Button
-import Material.Options as Options
+import Material.Card as Card
+import Material.Color as Color
+import Material.Options as Options exposing (css)
 
 
 main : Program Never Model Msg
@@ -90,23 +93,34 @@ decodeResp =
 
 view : Model -> Html Msg
 view model =
-    div
-        [ classList
-            [ ( "mdl-card", True )
-            , ( "mdl-shadow--4dp", True )
+    Card.view
+        [ css "width" "400px" ]
+        [ Card.title
+            [ css "background" "red"
+            , css "height" "100px"
+            , css "padding" "0"
             ]
-        ]
-        [ div [ class "mdl-card__title" ] [ h2 [ class "mdl-card__title-text" ] [ text "Today, for lunch, I recommend…" ] ]
-        , div [ class "mdl-card__supporting-text" ] [ text model.restaurant ]
-        , Button.render Mdl
-            [ 0 ]
-            model.mdl
-            [ Button.raised
-            , Button.colored
-            , Button.ripple
-            , Options.onClick GetRandomRestaurant
+            [ Card.head
+                [ Color.text Color.white
+                , Options.scrim 0.75
+                , css "padding" "16px"
+                , css "width" "100%"
+                ]
+                [ text "Today, for lunch, I recommend…" ]
             ]
-            [ text "Nah. Pick something else." ]
+        , Card.text [] [ text model.restaurant ]
+        , Card.actions
+            [ Card.border ]
+            [ Button.render Mdl
+                [ 0 ]
+                model.mdl
+                [ Button.raised
+                , Button.colored
+                , Button.ripple
+                , Options.onClick GetRandomRestaurant
+                ]
+                [ text "Nah. Pick something else." ]
+            ]
         ]
         |> Material.Scheme.top
 
