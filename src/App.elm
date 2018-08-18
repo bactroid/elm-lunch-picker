@@ -5,6 +5,14 @@ import Html.Events exposing (onClick)
 import Html.Attributes exposing (classList, class)
 import Http
 import Json.Decode as Decode
+import Material
+import Material.Scheme
+import Material.Elevation as Elevation
+import Material.Button as Button
+import Material.Card as Card
+import Material.Color as Color
+import Material.Typography as Typography
+import Material.Options as Options exposing (css)
 
 
 main : Program Never Model Msg
@@ -22,12 +30,15 @@ main =
 
 
 type alias Model =
-    String
+    -- String
+    { restaurant : String
+    , mdl : Material.Model
+    }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( "", getRandomRestaurant apiUrl )
+    ( { restaurant = "", mdl = Material.model }, getRandomRestaurant apiUrl )
 
 
 
@@ -37,19 +48,29 @@ init =
 type Msg
     = GetRandomRestaurant
     | NewRestaurant (Result Http.Error String)
+    | Mdl (Material.Msg Msg)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         GetRandomRestaurant ->
-            ( model, getRandomRestaurant apiUrl )
+            ( model
+            , getRandomRestaurant apiUrl
+            )
 
         NewRestaurant (Ok newRestaurant) ->
-            ( newRestaurant, Cmd.none )
+            ( { model | restaurant = newRestaurant }
+            , Cmd.none
+            )
 
         NewRestaurant (Err _) ->
-            ( model, Cmd.none )
+            ( model
+            , Cmd.none
+            )
+
+        Mdl msg_ ->
+            Material.update Mdl msg_ model
 
 
 apiUrl : String
@@ -73,24 +94,33 @@ decodeResp =
 
 view : Model -> Html Msg
 view model =
-    div
-        [ classList
-            [ ( "mdl-card", True )
-            , ( "mdl-shadow--4dp", True )
-            ]
+    Card.view
+        [ css "width" "400px"
+        , Elevation.e4
         ]
-        [ div [ class "mdl-card__title" ] [ h2 [ class "mdl-card__title-text" ] [ text "Today, for lunch, I recommend…" ] ]
-        , div [ class "mdl-card__supporting-text" ] [ text model ]
-        , div [ class "mdl-card__actions" ]
-            [ a
-                [ onClick GetRandomRestaurant
-                , classList
-                    [ ( "mdl-button", True )
-                    , ( "mdl-js-button", True )
-                    , ( "mdl-button--raised", True )
-                    , ( "mdl-js-ripple-effect", True )
-                    , ( "mdl-button--accent", True )
-                    ]
+        [ Card.title
+            [ Color.background (Color.color Color.Blue Color.S400)
+            , css "height" "100px"
+            , css "padding" "0"
+            ]
+            [ Card.head
+                [ Color.text Color.white
+                , Options.scrim 0.75
+                , css "padding" "16px"
+                , css "width" "100%"
+                ]
+                [ text "Today, for lunch, I recommend…" ]
+            ]
+        , Card.text [] [ Options.div [ Typography.headline ] [ text model.restaurant ] ]
+        , Card.actions
+            [ Card.border ]
+            [ Button.render Mdl
+                [ 0 ]
+                model.mdl
+                [ Button.raised
+                , Button.colored
+                , Button.ripple
+                , Options.onClick GetRandomRestaurant
                 ]
                 [ text "Nah. Pick something else." ]
             ]
