@@ -15540,6 +15540,123 @@ var _debois$elm_mdl$Material_Scheme$top = function (content) {
 	return A3(_debois$elm_mdl$Material_Scheme$topWithScheme, _debois$elm_mdl$Material_Color$Grey, _debois$elm_mdl$Material_Color$Grey, content);
 };
 
+var _debois$elm_mdl$Material_Spinner$layer = function (n) {
+	return A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: _debois$elm_mdl$Material_Options$cs(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'mdl-spinner__layer mdl-spinner__layer-',
+					_elm_lang$core$Basics$toString(n))),
+			_1: {ctor: '[]'}
+		},
+		A2(
+			_elm_lang$core$List$map,
+			F2(
+				function (x, y) {
+					return y(x);
+				})(
+				{
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$div,
+						{
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('mdl-spinner__circle'),
+							_1: {ctor: '[]'}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}),
+			{
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Options$div(
+					{
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$cs('mdl-spinner__circle-clipper mdl-spinner__left'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: _debois$elm_mdl$Material_Options$div(
+						{
+							ctor: '::',
+							_0: _debois$elm_mdl$Material_Options$cs('mdl-spinner__gap-patch'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: _debois$elm_mdl$Material_Options$div(
+							{
+								ctor: '::',
+								_0: _debois$elm_mdl$Material_Options$cs('mdl-spinner__circle-clipper mdl-spinner__right'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			}));
+};
+var _debois$elm_mdl$Material_Spinner$layers = A2(
+	_elm_lang$core$List$map,
+	_debois$elm_mdl$Material_Spinner$layer,
+	A2(_elm_lang$core$List$range, 1, 4));
+var _debois$elm_mdl$Material_Spinner$defaultConfig = {active: false, singleColor: false};
+var _debois$elm_mdl$Material_Spinner$singleColor = function (_p0) {
+	return _debois$elm_mdl$Material_Options_Internal$option(
+		F2(
+			function (value, config) {
+				return _elm_lang$core$Native_Utils.update(
+					config,
+					{singleColor: value});
+			})(_p0));
+};
+var _debois$elm_mdl$Material_Spinner$active = function (_p1) {
+	return _debois$elm_mdl$Material_Options_Internal$option(
+		F2(
+			function (value, config) {
+				return _elm_lang$core$Native_Utils.update(
+					config,
+					{active: value});
+			})(_p1));
+};
+var _debois$elm_mdl$Material_Spinner$spinner = function (options) {
+	var _p2 = A2(_debois$elm_mdl$Material_Options_Internal$collect, _debois$elm_mdl$Material_Spinner$defaultConfig, options);
+	var summary = _p2;
+	var config = _p2.config;
+	return A5(
+		_debois$elm_mdl$Material_Options_Internal$apply,
+		summary,
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _debois$elm_mdl$Material_Options$cs('mdl-spinner mdl-js-spinner is-upgraded'),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_debois$elm_mdl$Material_Options$when,
+					config.active,
+					_debois$elm_mdl$Material_Options$cs('is-active')),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_debois$elm_mdl$Material_Options$when,
+						config.singleColor,
+						_debois$elm_mdl$Material_Options$cs('mdl-spinner--single-color')),
+					_1: {ctor: '[]'}
+				}
+			}
+		},
+		{ctor: '[]'},
+		_debois$elm_mdl$Material_Spinner$layers);
+};
+var _debois$elm_mdl$Material_Spinner$Config = F2(
+	function (a, b) {
+		return {active: a, singleColor: b};
+	});
+
 var _debois$elm_mdl$Material_Typography$uppercase = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-uppercase');
 var _debois$elm_mdl$Material_Typography$lowercase = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-lowercase');
 var _debois$elm_mdl$Material_Typography$capitalize = _debois$elm_mdl$Material_Options$cs('mdl-typography--text-capitalize');
@@ -15932,6 +16049,30 @@ var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
+var _user$project$Main$spinnerOrRestaurant = function (model) {
+	return _elm_lang$core$Native_Utils.eq(model.restaurant, '') ? _debois$elm_mdl$Material_Spinner$spinner(
+		{
+			ctor: '::',
+			_0: _debois$elm_mdl$Material_Spinner$active(
+				_elm_lang$core$Native_Utils.eq(model.restaurant, '')),
+			_1: {
+				ctor: '::',
+				_0: _debois$elm_mdl$Material_Spinner$singleColor(true),
+				_1: {ctor: '[]'}
+			}
+		}) : A2(
+		_debois$elm_mdl$Material_Options$div,
+		{
+			ctor: '::',
+			_0: _debois$elm_mdl$Material_Typography$headline,
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html$text(model.restaurant),
+			_1: {ctor: '[]'}
+		});
+};
 var _user$project$Main$decodeResp = A2(
 	_elm_lang$core$Json_Decode$at,
 	{
@@ -16054,18 +16195,7 @@ var _user$project$Main$view = function (model) {
 					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: A2(
-							_debois$elm_mdl$Material_Options$div,
-							{
-								ctor: '::',
-								_0: _debois$elm_mdl$Material_Typography$headline,
-								_1: {ctor: '[]'}
-							},
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html$text(model.restaurant),
-								_1: {ctor: '[]'}
-							}),
+						_0: _user$project$Main$spinnerOrRestaurant(model),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
