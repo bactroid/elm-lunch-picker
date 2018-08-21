@@ -13,6 +13,7 @@ import Material.Card as Card
 import Material.Color as Color
 import Material.Typography as Typography
 import Material.Options as Options exposing (css)
+import Material.Spinner as Loading
 
 
 main : Program Never Model Msg
@@ -111,7 +112,8 @@ view model =
                 ]
                 [ text "Today, for lunch, I recommend…" ]
             ]
-        , Card.text [] [ Options.div [ Typography.headline ] [ text model.restaurant ] ]
+        , Card.text []
+            [ spinnerOrRestaurant model ]
         , Card.actions
             [ Card.border ]
             [ Button.render Mdl
@@ -125,6 +127,14 @@ view model =
                 [ text "Nah. Pick something else." ]
             ]
         ]
+
+
+spinnerOrRestaurant : Model -> Html Msg
+spinnerOrRestaurant model =
+    if model.restaurant == "" then
+        Loading.spinner [ Loading.active (model.restaurant == ""), Loading.singleColor True ]
+    else
+        Options.div [ Typography.headline ] [ text model.restaurant ]
 
 
 
